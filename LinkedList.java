@@ -82,6 +82,38 @@ public class LinkedList {
         return size;
     }
 
+    // Reversing LinkedList using iterative approach
+    public void reversList() {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        Node prevNode = head;
+        Node currNode = head.next;
+        while (currNode != null) {
+            Node nextNode = currNode.next;
+
+            currNode.next = prevNode;
+
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+        head.next = null;
+        head = prevNode;
+    }
+
+    // Reversing List using Recursive approach
+    public Node revList(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node newHead = revList(head.next);
+        head.next.next = head;
+        head.next = null;
+
+        return newHead;
+    }
+
     // Printing LinkedList
     public void printList() {
         if (head == null) {
@@ -112,5 +144,11 @@ public class LinkedList {
         LL.delLast();
         LL.printList();
         System.out.println(LL.getSize());
+
+        LL.reversList();
+        LL.printList();
+
+        LL.head = LL.revList(LL.head);
+        LL.printList();
     }
 }
